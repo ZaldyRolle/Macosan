@@ -15,6 +15,7 @@
             --white: #ffffff;
             --text: #1a1a1a;
             --shadow: 0 10px 24px rgba(0,0,0,0.06);
+            --border-color: #e2e8f0;
         }
 
         * {
@@ -29,7 +30,7 @@
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--light-bg);
+            background: var(--white);
             color: var(--text);
             line-height: 1.6;
         }
@@ -88,9 +89,6 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            /* GITHUB TIP: If your image is in the same repo, change the URL to:
-               url('hero-bg.jpg') 
-            */
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
                 url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1600');
             background-size: cover;
@@ -127,9 +125,19 @@
             background: #e68900;
         }
 
-        /* --- SECTIONS --- */
+        /* --- ALTERNATING SECTIONS --- */
         section {
             padding: 90px 0;
+        }
+
+        /* Odd sections get the light background */
+        section:nth-of-type(odd) {
+            background-color: var(--light-bg);
+        }
+
+        /* Even sections get white background */
+        section:nth-of-type(even) {
+            background-color: var(--white);
         }
 
         h2 {
@@ -160,11 +168,6 @@
             border-radius: 12px;
             border-left: 6px solid var(--accent);
             box-shadow: var(--shadow);
-        }
-
-        .highlight-item h3 {
-            margin-bottom: 12px;
-            color: var(--primary);
         }
 
         /* --- MANAGEMENT TILES --- */
@@ -320,6 +323,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .quote-form {
@@ -328,13 +333,15 @@
             opacity: 0;
             transform: translateY(-10px);
             transition: all 0.5s ease;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .quote-form.open {
             max-height: 1500px;
             opacity: 1;
             transform: translateY(0);
-            margin-top: 20px;
+            margin-top: 25px;
             padding: 35px;
             background: var(--white);
             border-radius: 14px;
@@ -346,7 +353,7 @@
             padding: 15px;
             margin: 10px 0;
             border-radius: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid #cbd5e1;
             font-size: 15px;
             font-family: inherit;
         }
@@ -362,30 +369,14 @@
             margin-top: 15px;
             width: 100%;
             font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        form button:hover {
+            background: #082d6b;
         }
 
         /* --- FOOTER & CONTACT --- */
-        .whatsapp {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #25D366;
-            color: var(--white);
-            font-size: 28px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-            z-index: 1000;
-            transition: transform 0.3s;
-        }
-
-        .whatsapp:hover { transform: scale(1.1); }
-
         footer {
             background: var(--primary);
             color: var(--white);
@@ -400,9 +391,55 @@
             box-shadow: var(--shadow);
             max-width: 600px;
             margin: auto;
+            color: var(--text);
         }
 
-        /* --- MOBILE RESPONSIVENESS --- */
+        /* --- CHATBOT --- */
+        .chat-toggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--primary);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 24px;
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            width: 350px;
+            max-width: 90vw;
+            height: 450px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1001;
+            overflow: hidden;
+            border: 1px solid #e1e1e1;
+        }
+
+        .chat-window.open { display: flex; }
+        .chat-header { background: var(--primary); color: var(--white); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px; }
+        .message { max-width: 80%; padding: 10px 14px; border-radius: 12px; font-size: 14px; }
+        .message.bot { background: #e9ecef; color: var(--text); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .message.user { background: var(--primary); color: var(--white); align-self: flex-end; border-bottom-right-radius: 2px; }
+        .chat-input-area { padding: 15px; background: var(--white); border-top: 1px solid #eee; display: flex; gap: 10px; }
+        .chat-input-area input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+        .chat-send { background: var(--primary); color: var(--white); border: none; padding: 0 15px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
         @media(max-width: 820px) {
             .menu-btn { display: block; }
             .nav-links {
@@ -414,14 +451,8 @@
                 left: 0;
                 width: 100%;
                 padding: 20px 0;
-                border-top: 1px solid rgba(255,255,255,0.1);
             }
-            .nav-links a {
-                display: block;
-                margin: 15px 0;
-                text-align: center;
-                font-size: 18px;
-            }
+            .nav-links a { display: block; margin: 15px 0; text-align: center; }
             .highlights-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -437,19 +468,20 @@
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#services">Services</a>
+            <a href="#why">Why Us</a>
             <a href="#quote">Get Quote</a>
             <a href="#contact">Contact</a>
         </nav>
     </div>
 </header>
 
-<section id="home" class="hero">
+<section id="home" class="hero" style="background-color: transparent !important;">
     <h1>Trusted Philippine Customs Brokerage</h1>
     <p>Fast Clearance • Correct Duties • Reliable Logistics Processing</p>
     <a class="btn" href="#quote">Request Shipment Quote</a>
 </section>
 
-<!-- ABOUT & MANAGEMENT SECTION -->
+<!-- SECTION 1: ABOUT (Light Bg) -->
 <section id="about">
     <div class="container">
         <h2>About Our Company</h2>
@@ -458,7 +490,6 @@
             bridging global trade with local compliance for businesses of all sizes.
         </p>
 
-        <!-- Highlights -->
         <div class="highlights-grid">
             <div class="highlight-item">
                 <h3>Our Mission</h3>
@@ -474,31 +505,24 @@
             </div>
         </div>
 
-        <!-- Management Interactive Tiles -->
         <h2 style="margin-top:40px">Meet Our Leadership</h2>
         <div class="mgmt-grid">
-            <!-- 
-               GITHUB TIP: If you upload "owner.jpg" to GitHub, change src to:
-               src="owner.jpg" 
-            -->
             <div class="mgmt-card">
-                <img src="CEO.jpg" class="mgmt-img" alt="CEO">
+                <img src="COE.jpg" class="mgmt-img" alt="Founder">
                 <div class="mgmt-info">
-                    <div class="mgmt-role">Founder & Co-Owner</div>
+                    <div class="mgmt-role">Founder & Owner</div>
                     <div class="mgmt-name">Marvin C. Santianez</div>
                     <div class="mgmt-bio">With over 20 years in the industry, MCS leads Macosan with a vision of simplifying Philippine trade complexities for every local entrepreneur.</div>
                 </div>
             </div>
-            
             <div class="mgmt-card">
                 <img src="Finance.jpg" class="mgmt-img" alt="Finance">
                 <div class="mgmt-info">
-                    <div class="mgmt-role">Finance Director</div>
-                    <div class="mgmt-name">Maureen Santianez</div>
+                    <div class="mgmt-role">Head of Finance</div>
+                    <div class="mgmt-name">Maureen Ayson</div>
                     <div class="mgmt-bio">Maureen oversees our financial transparency and optimizes duty computations to provide the most cost-effective brokerage solutions.</div>
                 </div>
             </div>
-            
             <div class="mgmt-card">
                 <img src="Marketing.jpeg" class="mgmt-img" alt="Marketing">
                 <div class="mgmt-info">
@@ -507,21 +531,20 @@
                     <div class="mgmt-bio">Mary Ann builds strategic partnerships and ensures our service offerings evolve alongside the needs of the modern global market.</div>
                 </div>
             </div>
-            
             <div class="mgmt-card">
                 <img src="Operation.jpg" class="mgmt-img" alt="Operations">
                 <div class="mgmt-info">
-                    <div class="mgmt-role">Operations Manager</div>
+                    <div class="mgmt-role">Head of Operations</div>
                     <div class="mgmt-name">Mhel Anthony Santianez</div>
-                    <div class="mgmt-bio">Anthony manages daily coordination with port authorities, ensuring your cargo moves through the pipeline with record-breaking speed.</div>
+                    <div class="mgmt-bio">Anothony manages daily coordination with port authorities, ensuring your cargo moves through the pipeline with record-breaking speed.</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- SERVICES INFINITE CAROUSEL -->
-<section id="services" style="background:var(--white)">
+<!-- SECTION 2: SERVICES (White Bg) -->
+<section id="services">
     <div class="container">
         <h2>Our Specialized Services</h2>
         <div class="carousel-container" id="carouselWrapper">
@@ -560,7 +583,7 @@
     </div>
 </section>
 
-<!-- WHY SECTION -->
+<!-- SECTION 3: WHY (Light Bg) -->
 <section id="why">
     <div class="container">
         <h2>Why Partner with Us</h2>
@@ -573,7 +596,7 @@
     </div>
 </section>
 
-<!-- QUOTE FORM SECTION -->
+<!-- SECTION 4: QUOTE (White Bg) -->
 <section id="quote">
     <div class="container">
         <h2>Get a Shipment Quotation</h2>
@@ -583,7 +606,7 @@
         </div>
         <form class="quote-form" id="quoteForm">
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">
-                <input placeholder="Full Name" required>
+                <input placeholder="Full Name" required id="quoteName">
                 <input placeholder="Company Name">
                 <input placeholder="Phone Number" required>
                 <input placeholder="Email Address" type="email" required>
@@ -602,8 +625,8 @@
     </div>
 </section>
 
-<!-- CONTACT SECTION -->
-<section id="contact" style="background:var(--white)">
+<!-- SECTION 5: CONTACT (Light Bg) -->
+<section id="contact">
     <div class="container">
         <h2>Get In Touch</h2>
         <div class="contact-card">
@@ -619,25 +642,29 @@
     <p>&copy; 2026 Macosan Customs Brokerage &bull; Serving Philippine Trade with Excellence</p>
 </footer>
 
-<!-- Floating WhatsApp Action -->
-<a class="whatsapp" href="https://wa.me/639XXXXXXXXX" target="_blank" aria-label="Chat on WhatsApp">💬</a>
+<!-- CHATBOT INTERFACE -->
+<div class="chat-toggle" onclick="toggleChat()" title="Chat with our assistant">🤖</div>
+
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+        <span>Macosan Assistant</span>
+        <span class="close-chat" onclick="toggleChat()">×</span>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+        <div class="message bot">Hello! I'm the Macosan automated assistant. How can I help you with your customs brokerage needs today?</div>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Ask a question..." onkeypress="handleChatKey(event)">
+        <button class="chat-send" onclick="sendUserMessage()">Send</button>
+    </div>
+</div>
 
 <script>
     /* MOBILE NAVIGATION */
     function toggleMenu() {
         const nav = document.getElementById('nav');
-        const isFlex = nav.style.display === 'flex';
-        nav.style.display = isFlex ? 'none' : 'flex';
+        nav.style.display = (nav.style.display === 'flex') ? 'none' : 'flex';
     }
-
-    // Auto-close menu on link click (Mobile UX)
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 820) {
-                document.getElementById('nav').style.display = 'none';
-            }
-        });
-    });
 
     /* QUOTE FORM EXPANSION */
     function toggleQuote() {
@@ -652,67 +679,81 @@
         }
     }
 
-    /* INFINITE CAROUSEL LOGIC */
+    /* CHATBOT LOGIC */
+    function toggleChat() {
+        const chat = document.getElementById('chatWindow');
+        chat.classList.toggle('open');
+    }
+
+    function handleChatKey(e) { if (e.key === 'Enter') sendUserMessage(); }
+
+    function sendUserMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user');
+        input.value = '';
+
+        setTimeout(() => {
+            let response = "I've received your message. For technical shipment details, please use our Quotation form or email info@macosanbrokerage.com.";
+            addMessage(response, 'bot');
+        }, 800);
+    }
+
+    function addMessage(text, sender) {
+        const container = document.getElementById('chatMessages');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `message ${sender}`;
+        msgDiv.innerText = text;
+        container.appendChild(msgDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    /* CAROUSEL LOGIC */
     const track = document.getElementById('serviceTrack');
     const slides = Array.from(track.children);
     const nextBtn = document.getElementById('nextBtn');
     const prevBtn = document.getElementById('prevBtn');
-    const wrapper = document.getElementById('carouselWrapper');
 
-    // Clone nodes for seamless loop
     const firstClone = slides[0].cloneNode(true);
     const lastClone = slides[slides.length - 1].cloneNode(true);
     track.appendChild(firstClone);
     track.insertBefore(lastClone, slides[0]);
 
     let counter = 1;
-    const size = 100;
-    track.style.transform = `translateX(${-size * counter}%)`;
+    track.style.transform = `translateX(-100%)`;
 
     function moveNext() {
         if (counter >= track.children.length - 1) return;
         track.style.transition = "transform 0.5s ease-in-out";
         counter++;
-        track.style.transform = `translateX(${-size * counter}%)`;
+        track.style.transform = `translateX(${-100 * counter}%)`;
     }
 
     function movePrev() {
         if (counter <= 0) return;
         track.style.transition = "transform 0.5s ease-in-out";
         counter--;
-        track.style.transform = `translateX(${-size * counter}%)`;
+        track.style.transform = `translateX(${-100 * counter}%)`;
     }
 
-    // Teleport logic for infinite effect
     track.addEventListener('transitionend', () => {
         if (track.children[counter] === firstClone) {
             track.style.transition = "none";
             counter = 1;
-            track.style.transform = `translateX(${-size * counter}%)`;
+            track.style.transform = `translateX(-100%)`;
         }
         if (track.children[counter] === lastClone) {
             track.style.transition = "none";
             counter = track.children.length - 2;
-            track.style.transform = `translateX(${-size * counter}%)`;
+            track.style.transform = `translateX(${-100 * counter}%)`;
         }
     });
 
-    // Control Event Listeners
-    nextBtn.addEventListener('click', () => { moveNext(); resetTimer(); });
-    prevBtn.addEventListener('click', () => { movePrev(); resetTimer(); });
-
-    // Auto Play logic
-    let playTimer = setInterval(moveNext, 5000);
-    function resetTimer() { 
-        clearInterval(playTimer); 
-        playTimer = setInterval(moveNext, 5000); 
-    }
-    
-    wrapper.addEventListener('mouseenter', () => clearInterval(playTimer));
-    wrapper.addEventListener('mouseleave', () => {
-        clearInterval(playTimer);
-        playTimer = setInterval(moveNext, 5000);
-    });
+    nextBtn.addEventListener('click', moveNext);
+    prevBtn.addEventListener('click', movePrev);
+    setInterval(moveNext, 5000);
 
     /* FORM SUBMISSION */
     document.getElementById('quoteForm').addEventListener('submit', (e) => {
